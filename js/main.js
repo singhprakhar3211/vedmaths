@@ -17,6 +17,26 @@
     });
   }
 
+  // In-page links: scroll to the section without putting "#section" in the URL
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var id = link.getAttribute("href").slice(1);
+    var target = id ? document.getElementById(id) : null;
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!target.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) {
+      target.setAttribute("tabindex", "-1");
+    }
+    target.focus({ preventScroll: true });
+  });
+
+  // If someone opens an old link like /#courses, keep the scroll but clean the URL
+  if (location.hash && window.history && history.replaceState) {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+
   // "Enquire" links on courses pre-select the course in the form
   var form = document.getElementById("enquiry");
   document.querySelectorAll("[data-course]").forEach(function (link) {

@@ -75,6 +75,7 @@ p { margin: 0 0 1em; }
 .btn--sm { padding: 10px 14px 8px; font-size: .92rem; }
 .btn--block { width: 100%; }
 :focus-visible { outline: 3px solid var(--gold-soft); outline-offset: 2px; }
+[tabindex="-1"]:focus { outline: none; }
 
 /* ---------- top line + header ---------- */
 .topline { background: var(--navy); color: #cfd6ea; font-size: .85rem; }
